@@ -1,0 +1,150 @@
+#select_box {
+    width: 1000px;
+    height: 710px;
+    position: absolute;
+    background-color: rgb(230, 230, 230);
+    top: 100px;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    border-radius: 5px;
+    border: 1px solid gray;
+    box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.5);
+    display: none;
+}
+
+
+#pagesNavigation {
+    height: 25px;
+    margin: 0 auto;
+    width: max-content;
+}
+
+.pagesButtons {
+    height: 25px;
+    width: 25px;
+    cursor: pointer;
+    float: left;
+    background-color: rgb(250, 250, 250);
+    text-align: center;
+    border-radius: 3px;
+    margin: 0 auto 0 3px;
+}
+
+.pagesButtons:hover {
+    background-color: rgb(215, 215, 215);
+}
+
+.search input {
+    margin-left: 27px;
+    width: 90%;
+    height: 30px;
+    padding-left: 10px;
+    border: 2px solid rgba(128,128,128);
+    border-radius: 3px;
+    outline: none;
+    background: rgb(230, 230, 230);
+    color: rgba(96,96,96);
+}
+
+.search button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 30px;
+    height: 30px;
+    margin-top: 20px;
+    margin-right: 27px;
+    border: none;
+    background: rgba(128,128,128);
+    border-radius: 0 3px 3px 0;
+    cursor: pointer;
+
+}
+
+.search button:before {
+    content: "\f002";
+    font-family: FontAwesome;
+    font-size: 16px;
+    color: rgb(230, 230, 230);
+}
+
+#selector {
+    position: absolute;
+    top: 0;
+    right: 30px;
+    width: auto;
+    height: 23px;
+    text-align: center;
+    margin-top: 20px;
+    margin-right: 27px;
+    padding-right: 5px;
+    border: 0;
+    border-top: 2px solid rgba(128,128,128);
+    border-bottom: 2px solid rgba(128,128,128);
+    background: rgb(230, 230, 230);
+    cursor: default;
+    padding-top: 3px;
+
+}
+
+.selectorParams {
+    width: auto;
+    height: auto;
+    position: absolute;
+    background-color: rgb(230, 230, 230);
+    text-align: right;
+    margin-right: 55px;
+    line-height: 30px;
+    right: 0;
+    margin-top: -2px;
+    border-bottom: 2px solid rgba(128,128,128);
+    border-right: 2px solid rgba(128,128,128);
+    border-left: 2px solid rgba(128,128,128);
+    display: none;
+}
+.selectorParams div:hover {
+    cursor: default;
+    background: rgb(192, 192 ,192);
+}
+
+#selector:active, select:focus{
+    outline:none
+}
+
+.resetSearchText {
+
+    margin-top: -25px;
+    margin-left: 40px;
+    position: absolute;
+}
+
+.resetSearchText:before {
+    content: "\f00d";
+    font-family: FontAwesome;
+    font-size: 20px;
+    color: rgb(108, 108, 108);
+}
+
+.resetSearchText:hover:before {
+    color: rgb(164, 164, 164);
+}
+
+.cross {
+    position: absolute;
+    margin-top: 2px;
+    margin-left: 982px;
+
+}
+
+.cross:before {
+    content: "\f00d";
+    font-family: FontAwesome;
+    font-size: 18px;
+    color: red;
+}
+
+.cross:active:before {
+    color: grey;
+}

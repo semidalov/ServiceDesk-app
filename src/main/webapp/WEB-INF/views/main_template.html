@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Service Desk</title>
+    <link rel="stylesheet" href="/static/css/main_template.css">
+</head>
+<body>
+<div class="main_div">
+    <div class="head_div" th:fragment="menu">
+        <div id="userMenu" class="userMenu">
+            <div onclick="changePassword()">Сменить пароль</div>
+        </div>
+        <div onclick="showUserMenu()" class="user_info">
+            <p style="margin-top: 5px; max-height: 10px"
+               th:text="${employee.patronymic == null} ? ${employee.lastName + ' ' + employee.firstName} : ${employee.lastName + ' ' + employee.firstName + ' ' + employee.patronymic}">
+                Here going to be the name of the user</p>
+        </div>
+
+        <div th:if="${employee.user.role.id != 2}" class="buttons">
+            <a href="/tasks"><button class="button" id="b1" type="button">Задачи</button></a>
+            <a href="/equipment"><button class="button" id="b2" type="button">Техника</button></a>
+            <a href="/classes"><button class="button" id="b3" type="button">Классы</button></a>
+            <a href="/incidents"><button class="button" id="b4" type="button">Инцеденты<br><span style="font-family: sans-serif; font-size: 14px">(в работе)</span></button></a>
+            <a href="/occasions"><button class="button" id="b5" type="button">Причины<br><span style="font-family: sans-serif; font-size: 14px">(в работе)</span></button></a>
+            <a href="/users"><button class="button" id="b6" type="button">Пользователи</button></a>
+            <a href=""><button class="button" id="b7" type="button">Отчеты<br><span style="font-family: sans-serif; font-size: 14px">(в работе)</span></button></a>
+        </div>
+        <div th:if="${employee.user.role.id == 2}" class="buttons" style="width: 150px">
+            <a href="/tasks"><button class="button" id="b1" type="button">Задачи</button></a>
+        </div>
+        <div>
+            <form th:action="@{/auth/logout}" th:method="POST">
+                <input class="out" type="submit" value="Выйти">
+            </form>
+        </div>
+    </div>
+    <div class="load"></div>
+    <div class="content_div" id="result_div">
+    </div>
+</div>
+</body>
+</html>
+

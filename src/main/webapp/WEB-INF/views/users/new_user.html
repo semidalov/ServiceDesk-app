@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Новый пользователь</title>
+    <script src="/static/libraries/jquery.min.js"></script>
+    <script src="/static/js/common.js"></script>
+    <link rel="stylesheet" href="/static/css/main_template.css">
+    <link rel="stylesheet" href="/static/css/forms_new_edit.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+</head>
+<body>
+<div class="main_div">
+    <div th:insert="main_template::menu"></div>
+    <div class="content_div">
+        <div id="resultDiv">
+            <div id="resultContent" style="height: 800px">
+                <div class="page_label">Новый пользователь</div>
+                <div class="form_new" style="padding-top: 30px">
+                    <form th:method="POST" th:action="@{/users/save}" th:object="${newUser}">
+                        <div class="labels">
+                            <div><label for="username">Username:</label></div>
+                            <div><label for="role">Role:</label></div>
+                            <div><label for="lasName">Фамилия:</label></div>
+                            <div><label for="firstName">Имя:</label></div>
+                            <div><label for="patronymic">Отчество:</label></div>
+                            <div><label for="group">Подразделение:</label></div>
+                            <div><label for="workPhone">Внутренний номер:</label></div>
+                        </div>
+                        <div class="fields">
+                            <div><input id="username" class="placeholder" type="text" th:field="*{username}" placeholder="Введите текст"></div>
+                            <div><select id="role" th:object="${newUser.role}" th:field="*{id}">
+                                <option th:each="role: ${roles}" th:value="${role.id}" th:text="${role.name}"></option>
+                            </select></div>
+                            <div><input id="lasName" class="placeholder" type="text" th:field="*{lastname}" placeholder="Введите текст"></div>
+                            <div><input id="firstName" class="placeholder" type="text" th:field="*{firstname}" placeholder="Введите текст"></div>
+                            <div><input id="patronymic" class="placeholder" type="text" th:field="*{patronymic}" placeholder="Введите текст"></div>
+                            <div><select id="group" th:object="${newUser.group}" th:field="*{id}">
+                                <option th:each="group: ${groups}" th:value="${group.id}" th:text="${group.name}"></option>
+                            </select></div>
+                            <div><input id="workPhone" class="placeholder" type="text" th:field="*{workPhone}" placeholder="Введите текст"></div>
+
+                            <div><input class="button" type="submit" onclick="document.getElementById('spinner').style.display = 'block'" value="Добавить"/></div>
+                            <div class="errors" th:object="${newUser}" style= "color: red; margin-top: 52px">
+                                <div><span th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></span></div>
+                                <div><span th:if="${#fields.hasErrors('firstname')}" th:errors="*{firstname}"></span></div>
+                                <div><span th:if="${#fields.hasErrors('lastname')}" th:errors="*{lastname}"></span></div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div id="resultNavigation"></div>
+        </div>
+    </div>
+</div>
+<div class="spinner" id="spinner"></div>
+</body>
+<script>
+    window.onload = function () {
+        document.getElementById('b6').style.backgroundColor = 'rgb(192, 192, 192)';
+    }
+
+</script>
+</html>

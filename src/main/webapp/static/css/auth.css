@@ -1,0 +1,53 @@
+body {
+    background: linear-gradient(0deg, rgb(245, 245, 245), rgb(192, 192, 192));
+}
+
+div {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+form {
+    margin-top: -100px;
+    padding: 20px;
+    background-color: rgb(220, 220, 210);
+    border-radius: 5px;
+    width :200px;
+    font-family: sans-serif;
+    font-size: 14px;
+    letter-spacing: 0.5px;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid gray;
+    box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.5);
+}
+
+form h3 {
+    text-align: center;
+    margin-top: -10px;
+    margin-bottom: 20px;
+    color: rgb(64, 64, 64);
+}
+
+form input {
+    padding: 5px;
+    text-align: center;
+}
+
+.button {
+    padding: 5px;
+    margin: 25px auto auto;
+    width: 100px;
+}
+
+.loginButton:hover {
+    cursor: pointer;
+}
+
+form span {
+    text-decoration: none;
+    margin: auto;
+    text-align: center;
+}

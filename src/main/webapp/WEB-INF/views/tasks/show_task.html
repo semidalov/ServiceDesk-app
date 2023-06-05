@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Просмотр задачи</title>
+    <script src="/static/libraries/jquery.min.js"></script>
+    <script src="/static/js/common.js"></script>
+    <script src="/static/js/new_edit_task_manager.js"></script>
+    <script src="/static/js/manager_common.js"></script>
+    <link rel="stylesheet" href="/static/css/main_template.css">
+    <link rel="stylesheet" href="/static/css/forms_new_edit.css">
+    <link rel="stylesheet" href="/static/css/forms_manager_boxes.css">
+    <link rel="stylesheet" href="/static/css/tables.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <script>
+       let equipmentManager = new EquipmentManager();
+       let incidentManager = new IncidentManager();
+       let executorManager = new ExecutorManager();
+       let occasionManager = new OccasionManager();
+    </script>
+</head>
+<body>
+<div class="main_div">
+    <div th:insert="main_template::menu"></div>
+    <div class="content_div" id="result_div">
+        <div id="resultDiv">
+            <div id="resultContent" style="height: 800px;">
+                <div class="page_label">Просмотр задачи</div>
+                <div th:if="${task.status.id == 1}" class="form_action">
+                    <form th:action="@{/tasks/take/{id}(id=${task.id})}" th:method="PATCH">
+                        <div class="labels">
+                            <div><label></label></div>
+                        </div>
+                        <div class="fields">
+                            <div><input onclick="document.getElementById('spinner').style.display = 'block'" class="submitButtons" type="submit" value="Взять на исполнение"></div>
+                        </div>
+                    </form>
+                </div>
+                <div th:if="${task.status.id == 2}" class="form_action">
+                    <form th:action="@{/tasks/close/{id}(id=${task.id})}" th:method="PATCH">
+                        <div class="labels">
+                            <div><label></label></div>
+                        </div>
+                        <div class="fields">
+                            <div><input id="closeTaskButton" onclick="document.getElementById('spinner').style.display = 'block'" class="submitButtons" type="submit" value="Закрыть"></div>
+                        </div>
+                    </form>
+                </div>
+                <div class="form_new" style="padding-top: 30px;">
+                    <form th:method="PATCH" th:action="@{/tasks/{id}/update(id=${task.id})}" th:object="${task}">
+                        <div class="labels">
+                            <div><label for="title">Название:</label></div>
+                            <div><label for="description">Описание:</label></div>
+                            <div style="margin-top: 37px"><label for="equipment">Техника:</label></div>
+                            <div><label for="incident">Инцидент:</label></div>
+                            <div><label for="priority">Приоритет:</label></div>
+                            <div><label for="creator">Создал:</label></div>
+                            <div style="margin-top: 5px"><label for="comment">Комментарий:</label></div>
+                            <div style="margin-top: 35px"><label for="created_time">Время создания:</label></div>
+                            <div><label for="status">Статус:</label></div>
+                            <div><label for="occasion">Причина инцедента:</label></div>
+                            <div><label for="executor">Исполнитель:</label></div>
+                            <div th:if="${task.closed != null}"><label for="closed_time">Время закрытия:</label></div>
+                            <div style="margin-top: 50px" th:if="${errorMsg}"><label>Ошибка:</label></div>
+                        </div>
+                        <div class="fields">
+                            <div><input id="title" class="placeholder" type="text" th:field="*{title}" placeholder="Введите текст"></div>
+                            <div><textarea id="description" class="placeholder" th:field="*{description}" placeholder="Введите текст"></textarea></div>
+                            <div><input onclick="equipmentManager.buildPage()" style="width: 300px; cursor: pointer" th:value="${task.getEquipmentName()}" id="equipment" class="placeholder" type="text" placeholder="Выбирите единицу" autocomplete="off"></div>
+                            <div><input onclick="incidentManager.buildPage()" style="width: 300px; cursor: pointer" th:value="${task.incidentName}" id="incident" class="placeholder" type="text" placeholder="Укажите инцидент" autocomplete="off"></div>
+                            <div><input id="priority" class="placeholder"
+                                        style="width: 150px; background-color: rgb(192, 192, 192); pointer-events: none"
+                                        th:value="${task.getTaskPriorityName()}"></div>
+                            <div><input id="creator" class="placeholder"
+                                        style="width: 300px; background-color: rgb(192, 192, 192); pointer-events: none"
+                                        th:value="${task.creator.patronymic == null} ? ${task.creator.lastName + ' ' + task.creator.firstName} : ${task.creator.lastName + ' ' + task.creator.firstName + ' ' + task.creator.patronymic}"></div>
+                            <div><textarea id="comment" class="placeholder" th:field="*{comment}" placeholder="Введите текст"></textarea></div>
+                            <div><input id="created_time" class="placeholder" style="width: 150px; background-color: rgb(192, 192, 192); pointer-events: none;" th:value="${task.created}"></div>
+                            <div><input id="status" class="placeholder" style="width: 150px; background-color: rgb(192, 192, 192); pointer-events: none;" th:value="${task.status.name}"></div>
+                            <div><input onclick="occasionManager.buildPage()" id="occasion" class="placeholder" placeholder="Укажите причину"
+                                        style="width: 300px; cursor: pointer"
+                                        th:value="${task.occasionName != null} ? ${task.occasionName} : ${''}" autocomplete="off"></div>
+                            <div><input id="executor" class="placeholder" placeholder="Назначить исполнителя"
+                                        onclick="executorManager.buildPage()"
+                                        style="width: 300px; cursor: pointer"
+                                        th:value="${task.executorName != null} ? ${task.executorName} : ${''}" autocomplete="off"></div>
+                            <div><input th:if="${task.closed != null}" id="closed_time" class="placeholder"
+                                        style="width: 300px; background-color: rgb(192, 192, 192); pointer-events: none" th:value="${task.closed}"></div>
+
+
+                            <div><input type="hidden" id="occasion_hidden" class="placeholder" th:value="${task.occasionId}" th:field="*{occasionId}"></div>
+                            <div><input type="hidden" id="executor_hidden" class="placeholder" th:value="${task.executorId}" th:field="*{executorId}"></div>
+                            <div><input type="hidden" id="incident_hidden" class="placeholder" th:value="${task.incidentId}" th:field="*{incidentId}"></div>
+                            <div><input type="hidden" id="equipment_hidden" class="placeholder" th:value="${task.equipmentId}" th:field="*{equipmentId}"></div>
+
+                            <div style="display: inline-block" ><input onclick="document.getElementById('spinner').style.display = 'block'" class="submitButtons" type="submit" value="Сохранить"/></div>
+                            <div style="display: inline-block"><input id="getBackButton" class="submitButtons" type="submit" value="Вернуться"/></div>
+
+                            <div style="color: red; margin-top: 11px" th:if="${errorMsg}" th:text="${errorMsg}">d</div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="select_box">
+    <div class="cross" onclick="closeManagerWindow()"></div>
+    <div id="selectorContent"></div>
+    <div id="selectorNavigation" style="height: 25px; margin: 5px auto"></div>
+</div>
+<div class="spinner" id="spinner"></div>
+</body>
+<script>
+    window.onload = function () {
+        document.getElementById('b1').style.backgroundColor = 'rgb(192, 192, 192)';
+        // document.getElementById('tb1').style.backgroundColor = 'rgb(210, 210, 210)';
+        // document.getElementById('tb1').style.boxShadow = 'none';
+        // document.getElementById('tb1').textContent = 'Редактировать';
+    }
+
+    document.getElementById("getBackButton").onclick = function (el) {
+        el.preventDefault();
+        window.location.href = "/tasks";
+    }
+
+    document.getElementById("closeTaskButton").onclick = function (el) {
+        el.preventDefault();
+        if (document.getElementById('occasion_hidden').value > 0)
+            document.querySelector('.form_action form').submit();
+        else {
+            alert('Не указана причина инцедента')
+        }
+        // window.location.href = "/tasks";
+    }
+</script>
+</html>

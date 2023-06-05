@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Редактировать класс</title>
+    <script src="/static/libraries/jquery.min.js"></script>
+    <script src="/static/js/common.js"></script>
+    <link rel="stylesheet" href="/static/css/main_template.css">
+    <link rel="stylesheet" href="/static/css/forms_new_edit.css">
+    <link rel="stylesheet" href="/static/css/forms_manager_boxes.css">
+    <link rel="stylesheet" href="/static/css/tables.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+</head>
+<body>
+<div class="main_div">
+    <div th:insert="main_template::menu"></div>
+    <div class="content_div" id="result_div">
+        <div id="resultDiv">
+            <div id="resultContent" style="height: 800px;">
+                <div class="page_label">Редактировать класс</div>
+                <div class="form_new" style="padding-top: 30px;">
+                    <form th:method="PATCH" th:action="@{/classes/{id}/update(id=${equipmentClass.id})}" th:object="${equipmentClass}">
+                        <div class="labels">
+                            <div><label for="name">Наименование:</label></div>
+                            <div><label for="description">Описание:</label></div>
+                        </div>
+                        <div class="fields">
+                            <div><input id="name" class="placeholder" type="text" th:field="*{name}" placeholder="Введите текст"></div>
+                            <div><input id="description" class="placeholder" type="text" th:field="*{description}" placeholder="Введите текст"></div>
+
+                            <div style="display: inline-block" ><input onclick="document.getElementById('spinner').style.display = 'block'" class="submitButtons" type="submit" value="Сохранить"/></div>
+                            <div style="display: inline-block"><input id="getBackButton" class="submitButtons" type="submit" value="Вернуться"/></div>
+
+                            <div class="errors" th:object="${equipmentClass}" style= "color: red; margin-top: 52px">
+                                <div><span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span></div>
+                                <div><span th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></span></div>
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="spinner" id="spinner"></div>
+</body>
+<script>
+    window.onload = function () {
+        document.getElementById('b3').style.backgroundColor = 'rgb(192, 192, 192)';
+        // document.getElementById('tb1').style.backgroundColor = 'rgb(210, 210, 210)';
+        // document.getElementById('tb1').style.boxShadow = 'none';
+        // document.getElementById('tb1').textContent = 'Редактировать';
+    }
+
+    document.getElementById("getBackButton").onclick = function (el) {
+        el.preventDefault();
+        window.location.href = "/classes";
+    }
+
+    // document.getElementById("deleteEquipmentButton").onclick = function (el) {
+    //     el.preventDefault();
+    //     if (confirm('Еданица будет выведена из экстплуатации')) {
+    //         document.querySelector('.form_action form').submit();
+    //     }
+    // }
+</script>
+</html>

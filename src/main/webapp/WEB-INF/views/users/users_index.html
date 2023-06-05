@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Пользователм</title>
+    <script src="/static/libraries/jquery.min.js"></script>
+    <script src="/static/js/common.js"></script>
+    <script src="/static/js/cookie.js"></script>
+    <script src="/static/js/users_filter.js"></script>
+    <script src="/static/js/users_manager.js"></script>
+    <script src="/static/js/manager_common.js"></script>
+    <link rel="stylesheet" href="/static/css/search.css">
+    <link rel="stylesheet" href="/static/css/main_template.css">
+    <link rel="stylesheet" href="/static/css/buttons.css">
+    <link rel="stylesheet" href="/static/css/tables.css">
+    <link rel="stylesheet" href="/static/css/pages_buttons.css">
+    <link rel="stylesheet" href="/static/css/filter.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <script>
+        usersManager = new UsersManager();
+    </script>
+</head>
+<body>
+<div class="main_div">
+    <div th:insert="main_template::menu"></div>
+    <div class="content_div" id="result_div">
+        <div class="task_buttons" th:fragment="userButtons" style="width: 275px; height: 50px; margin: 0 auto; display: flex;">
+            <a style="margin-top: 15px" href="/users/new" onclick="document.querySelector('.spinner').style.display = 'block'">
+                <button class="task_button" id="tb1">Новый</button>
+            </a>
+            <a onclick="buildRequest('allUsers')">
+                <button class="task_button" id="tb2" style="margin-left: 5px; margin-top: 15px">Пользователи</button>
+            </a>
+            <a id="filter_button">
+                <button class="filter_button" id="tb3" style="width: 27px;margin-left: 5px; margin-top: 15px" onclick="showUsersFilter()"></button>
+            </a>
+        </div>
+        <div id="resultDiv">
+            <div id="resultContent"></div>
+            <div id="resultNavigation"></div>
+        </div>
+    </div>
+</div>
+<div th:fragment="filter_window" class="filter_window">
+    <div style="height: 110px; background-color: #F4F6FA; width: 535px; margin: 15px auto 0; border-radius: 3px;">
+        <div class="filter_title">
+            <div>Отдел</div>
+            <div>Role</div>
+            <div>Locked</div>
+        </div>
+        <div class="filter_drop_down">
+            <div id="UserGroupParam">
+                <select class="param">
+                </select>
+            </div>
+            <div id="UserRoleParam">
+                <select class="param">
+                </select>
+            </div>
+        </div>
+        <div class="filter_values">
+            <div id="UserGroupValue">
+                <select class="value">
+                </select>
+            </div>
+            <div id="UserRoleValue">
+                <select class="value">
+                </select>
+            </div>
+            <div id="UserLockedValue">
+                <select class="value">
+                </select>
+            </div>
+        </div>
+        <div class="filter_reset">
+            <div>
+                <div onclick="removeFilter('UserGroupValue', 'UserGroupParam')"></div>
+            </div>
+            <div>
+                <div onclick="removeFilter('UserRoleValue', 'UserRoleParam')"></div>
+            </div>
+            <div>
+                <div onclick="removeFilter('UserLockedValue', '')"></div>
+            </div>
+        </div>
+    </div>
+    <div>
+        <div class="filter_buttons">
+            <button onclick="applyUsersFilter()" style="float: left">Применить</button>
+            <button onclick="hideUsersFilter()" style="float: right">Отмена</button>
+        </div>
+    </div>
+</div>
+<div class="spinner" id="spinner"></div>
+</body>
+<script>
+    window.onload = function () {
+        document.getElementById('b6').style.backgroundColor = 'rgb(192, 192, 192)';
+
+        buildRequest(usersManager, '/users/get_users', 'tb2')
+    }
+</script>
+</html>

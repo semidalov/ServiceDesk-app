@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Оборудование</title>
+    <script src="/static/libraries/jquery.min.js"></script>
+    <script src="/static/js/common.js"></script>
+    <script src="/static/js/cookie.js"></script>
+    <script src="/static/js/equipment_classes_manager.js"></script>
+    <script src="/static/js/manager_common.js"></script>
+    <link rel="stylesheet" href="/static/css/search.css">
+    <link rel="stylesheet" href="/static/css/main_template.css">
+    <link rel="stylesheet" href="/static/css/buttons.css">
+    <link rel="stylesheet" href="/static/css/tables.css">
+    <link rel="stylesheet" href="/static/css/pages_buttons.css">
+    <link rel="stylesheet" href="/static/css/filter.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <script>
+        equipmentClassesManager = new EquipmentClassesManager();
+    </script>
+</head>
+<body>
+<div class="main_div">
+    <div th:insert="main_template::menu"></div>
+    <div class="content_div" id="result_div">
+        <div class="task_buttons" style="width: 275px; height: 50px; margin: 0 auto; display: flex;">
+            <a style="margin-top: 15px" href="/classes/new" onclick="document.querySelector('.spinner').style.display = 'block'">
+                <button class="task_button" id="tb1">Добавить</button>
+            </a>
+            <a onclick="buildRequest(equipmentClassesManager, '/classes/get_classes', 'tb2')">
+                <button class="task_button" id="tb2" style="margin-left: 5px; margin-top: 15px">Классы</button>
+            </a>
+<!--            <a id="filter_button">-->
+<!--                <button class="filter_button" id="tb3" style="width: 27px;margin-left: 5px; margin-top: 15px" onclick=""></button>-->
+<!--            </a>-->
+        </div>
+        <div id="resultDiv">
+            <div id="resultContent"></div>
+            <div id="resultNavigation"></div>
+        </div>
+    </div>
+</div>
+<!--<div class="filter_window">-->
+<!--    <div style="height: 110px; background-color: #F4F6FA; width: 535px; margin: 15px auto 0; border-radius: 3px;">-->
+<!--        <div class="filter_title">-->
+<!--            <div style="width: 80px">Класс</div>-->
+<!--        </div>-->
+<!--        <div class="filter_drop_down">-->
+<!--            <div id="EquipmentClassParam">-->
+<!--                <select class="param">-->
+<!--                </select>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <div class="filter_values">-->
+<!--            <div id="EquipmentClassValue">-->
+<!--                <select class="value">-->
+<!--                </select>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <div class="filter_reset">-->
+<!--            <div>-->
+<!--                <div onclick="removeFilter('EquipmentClassValue', 'EquipmentClassParam')"></div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    <div>-->
+<!--        <div class="filter_buttons">-->
+<!--            <button onclick="applyEquipmentFilter()" style="float: left">Применить</button>-->
+<!--            <button onclick="hideEquipmentFilter()" style="float: right">Отмена</button>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+<div class="spinner" id="spinner"></div>
+</body>
+<script>
+    window.onload = function () {
+        document.getElementById('b3').style.backgroundColor = 'rgb(192, 192, 192)';
+
+        buildRequest(equipmentClassesManager, '/classes/get_classes', 'tb2')
+    }
+</script>
+</html>

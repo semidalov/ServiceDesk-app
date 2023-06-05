@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Просмотр оборудования</title>
+    <script src="/static/libraries/jquery.min.js"></script>
+    <script src="/static/js/common.js"></script>
+    <link rel="stylesheet" href="/static/css/main_template.css">
+    <link rel="stylesheet" href="/static/css/forms_new_edit.css">
+    <link rel="stylesheet" href="/static/css/forms_manager_boxes.css">
+    <link rel="stylesheet" href="/static/css/tables.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+</head>
+<body>
+<div class="main_div">
+    <div th:insert="main_template::menu"></div>
+    <div class="content_div" id="result_div">
+        <div id="resultDiv">
+            <div id="resultContent" style="height: 800px;">
+                <div class="page_label">Просмотр техники</div>
+                <div th:if="${equipment.inUse == true}" class="form_action">
+                    <form th:action="@{/equipment/{id}/delete(id=${equipment.id})}" th:method="DELETE">
+                        <div class="labels">
+                            <div><label></label></div>
+                        </div>
+                        <div class="fields">
+                            <div><input id="deleteEquipmentButton" onclick="document.getElementById('spinner').style.display = 'block'" class="submitButtons" type="submit" value="Вывести из эксплуатации"></div>
+                        </div>
+                    </form>
+                </div>
+                <div class="form_new" style="padding-top: 30px;">
+                    <form th:method="PATCH" th:action="@{/equipment/{id}/update(id=${equipment.id})}" th:object="${equipment}">
+                        <div class="labels">
+                            <div><label for="title">Наименование:</label></div>
+                            <div><label for="serial">Серийный номер:</label></div>
+                            <div><label for="equipmentClass">Класс:</label></div>
+                        </div>
+                        <div class="fields">
+                            <div><input id="title" class="placeholder" type="text" th:field="*{name}" placeholder="Введите текст"></div>
+                            <div><input id="serial" class="placeholder" type="text" th:field="*{serial}" placeholder="Введите текст"></div>
+                            <div><select id="equipmentClass" th:object="${equipment.equipmentClass}" th:field="*{id}" style="height: 25px; border-radius: 3px">
+                                <option th:each="class: ${classes}" th:value="${class.id}" th:text="${class.name}"></option>
+                            </select></div>
+
+                            <div style="display: inline-block" ><input onclick="document.getElementById('spinner').style.display = 'block'" class="submitButtons" type="submit" value="Сохранить"/></div>
+                            <div style="display: inline-block"><input id="getBackButton" class="submitButtons" type="submit" value="Вернуться"/></div>
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="spinner" id="spinner"></div>
+</body>
+<script>
+    window.onload = function () {
+        document.getElementById('b2').style.backgroundColor = 'rgb(192, 192, 192)';
+        // document.getElementById('tb1').style.backgroundColor = 'rgb(210, 210, 210)';
+        // document.getElementById('tb1').style.boxShadow = 'none';
+        // document.getElementById('tb1').textContent = 'Редактировать';
+    }
+
+    document.getElementById("getBackButton").onclick = function (el) {
+        el.preventDefault();
+        window.location.href = "/equipment";
+    }
+
+    document.getElementById("deleteEquipmentButton").onclick = function (el) {
+        el.preventDefault();
+        if (confirm('Еданица будет выведена из экстплуатации')) {
+            document.querySelector('.form_action form').submit();
+        }
+    }
+</script>
+</html>

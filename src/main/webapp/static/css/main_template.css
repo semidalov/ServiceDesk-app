@@ -1,0 +1,213 @@
+.main_div {
+    /*height: 900px;*/
+    width: 100%;
+}
+
+body {
+    min-width: 1280px;
+}
+
+.head_div {
+    height: 50px;
+    width: 100%;
+    /*background-color: rgb(192, 192, 192);*/
+    background: gray;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+}
+
+.button {
+    height: 50px;
+    border: 0 solid black;
+    float: left;
+    background: rgb(164, 164, 164);
+    color: rgb(64, 64, 64);
+    font-family: fantasy;
+    letter-spacing: 1px;
+}
+
+.button:hover {
+    background-color: rgb(192, 192, 192) !important;
+}
+
+.buttons {
+    margin: 0 auto;
+}
+
+@media only screen and (max-width: 2500px){
+    .button {
+        width: 130px;
+        font-size: 16px;
+    }
+    .buttons {
+        width: 910px;
+    }
+}
+
+@media only screen and (max-width: 2000px){
+    .button {
+        width: 130px;
+        font-size: 16px;
+    }
+    .buttons {
+        width: 910px;
+    }
+}
+
+@media only screen and (max-width: 1600px){
+    .button {
+        width: 100px;
+        font-size: 14px;
+    }
+    .buttons {
+        width: 700px;
+    }
+}
+
+@media only screen and (max-width: 1000px){
+    .button {
+        width: 100px;
+        font-size: 14px;
+    }
+    .buttons {
+        width: 700px;
+        margin-left: 250px;
+    }
+}
+
+.user_info {
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    padding-left: 5px;
+    padding-right: 5px;
+    border-radius: 2px;
+    float: left;
+    font-weight: bold;
+    margin-left: 10px;
+    background-color: rgb(192, 192, 192);
+    height: 30px;
+    margin-top: 10px;
+}
+
+.user_info:hover {
+    background: rgb(220, 220 ,220);
+    cursor: default;
+}
+
+.userMenu {
+    position: absolute;
+    display: inline-block;
+    float: left;
+    margin-top: 53px;
+    margin-left: 10px;
+    border-radius: 2px;
+    animation-duration: 1s;
+    opacity: 0;
+    transition: 200ms;
+    font-size: 14px;
+    letter-spacing: 0.5px;
+    font-weight: bold;
+}
+
+.userMenu div {
+    background-color: rgba(230, 230, 230, 1);
+    margin-top: 5px;
+    line-height: 30px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 2px;
+    cursor: default;
+    box-shadow: 0 1px 0 rgba(255, 255, 255, .1) inset, 0 1px 3px rgba(0, 0, 0, .9);
+}
+
+.userMenu div:hover {
+    background-color: rgba(210, 210, 210, 1);
+}
+
+.out {
+    background-color: rgb(192, 192, 192);
+    border: 0px solid black;
+    float: right;
+    width: 60px;
+    height: 40px;
+    border-top-right-radius: 5px;
+    margin-top: 5px;
+    margin-right: 5px;
+    font-weight: bold;
+    color: black;
+    offset-after: 15px;
+}
+
+.out:hover {
+    background-color: rgb(220, 220, 220);
+}
+
+@media only screen and (max-height: 1440px) {
+    .content_div {
+        padding-top: 1px;
+        width: 100%;
+        height: 1000px;
+        /*height: 93vh;*/
+        background: linear-gradient(0deg, rgb(245, 245, 245), rgb(192, 192, 192));
+    }
+
+    #resultContent {
+        height: 895px
+    }
+}
+
+@media only screen and (max-height: 1020px) {
+    .content_div {
+        padding-top: 1px;
+        width: 100%;
+        height: 885px;
+        /*height: 93vh;*/
+        background: linear-gradient(0deg, rgb(245, 245, 245), rgb(192, 192, 192));
+    }
+
+    #resultContent {
+        height: 775px
+    }
+}
+
+.spinner {
+    position: absolute;
+    color: rgb(96, 96, 96);
+    top: 300px;
+    margin-left: auto;
+    margin-right: auto;
+    left: 48.4%;
+    right: 50%;
+    display: none;
+}
+
+.spinner:after {
+    animation: changeContent .8s linear infinite;
+    display: block;
+    content: "⠋";
+    margin: 0 auto;
+    font-size: 80px;
+}
+
+@keyframes changeContent {
+    10% { content: "⠙"; }
+    20% { content: "⠹"; }
+    30% { content: "⠸"; }
+    40% { content: "⠼"; }
+    50% { content: "⠴"; }
+    60% { content: "⠦"; }
+    70% { content: "⠧"; }
+    80% { content: "⠇"; }
+    90% { content: "⠏"; }
+}
+
+.filter_button:before {
+    content: "\f0b0";
+    font-family: FontAwesome;
+    font-size: 18px;
+    color: rgb(128, 128, 128);
+}
+

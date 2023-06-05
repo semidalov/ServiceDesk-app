@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Новая задача</title>
+    <script src="/static/libraries/jquery.min.js"></script>
+    <script src="/static/js/common.js"></script>
+    <script src="/static/js/new_edit_task_manager.js"></script>
+    <script src="/static/js/manager_common.js"></script>
+    <link rel="stylesheet" href="/static/css/main_template.css">
+    <link rel="stylesheet" href="/static/css/forms_new_edit.css">
+    <link rel="stylesheet" href="/static/css/forms_manager_boxes.css">
+    <link rel="stylesheet" href="/static/css/tables.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <script>
+        let equipmentManager = new EquipmentManager();
+        let incidentManager = new IncidentManager();
+    </script>
+</head>
+<body>
+<div class="main_div">
+    <div th:insert="main_template::menu"></div>
+    <div class="content_div">
+        <div id="resultDiv">
+            <div id="resultContent" style="height: 800px">
+                <div class="page_label">Создать задачу</div>
+                <div class="form_new" style="padding-top: 30px">
+                    <form th:method="POST" th:action="@{/tasks/save}" th:object="${task}">
+                        <div class="labels">
+                            <div><label for="title">Название:</label></div>
+                            <div><label for="description">Описание:</label></div>
+                            <div style="margin-top: 33px"><label for="equipment">Техника:</label></div>
+                            <div><label for="incident">Инцидент:</label></div>
+                        </div>
+                        <div class="fields">
+                            <div><input id="title" class="placeholder" type="text" th:field="*{title}" placeholder="Введите текст"></div>
+                            <div><textarea id="description" class="placeholder" type="text" th:field="*{description}"
+                                           placeholder="Введите текст"></textarea>
+                            </div>
+                            <div><input type="hidden" id="equipment_hidden" class="placeholder" th:field="*{equipmentId}"
+                                        placeholder="Введите текст"></div>
+                            <div style="margin-top: -5px"><input type="hidden" id="incident_hidden" class="placeholder"
+                                                                 th:field="*{incidentId}"
+                                                                 placeholder="Введите текст"></div>
+
+                            <div><input onclick="equipmentManager.buildPage()" style="cursor: pointer" id="equipment" class="placeholder"
+                                        type="text" placeholder="Выбирите единицу" autocomplete="off"></div>
+                            <div><input onclick="incidentManager.buildPage()"
+                                        style="cursor: pointer" id="incident" class="placeholder" type="text" placeholder="Укажите инцидент" autocomplete="off"></div>
+
+                            <div><input class="submitButtons" onclick="document.getElementById('spinner').style.display = 'block'" type="submit" value="Добавить"/></div>
+
+                            <div th:if="${#fields.hasErrors('title')}" style="color: red"><span  th:errors="*{title}"></span></div>
+                            <div th:if="${#fields.hasErrors('description')}" style="color: red"><span th:errors="*{description}"></span></div>
+                            <div th:if="${#fields.hasErrors('equipmentId')}"  style="color: red"><span th:errors="*{equipmentId}"></span></div>
+                            <div th:if="${#fields.hasErrors('incidentId')}" style="color: red"><span th:errors="*{incidentId}"></span></div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="select_box">
+    <div class="cross" onclick="closeManagerWindow()"></div>
+    <div id="selectorContent"></div>
+    <div id="selectorNavigation" style="height: 25px; margin: 5px auto"></div>
+</div>
+<div class="spinner" id="spinner"></div>
+</body>
+<script>
+    window.onload = function () {
+        document.getElementById('b1').style.backgroundColor = 'rgb(192, 192, 192)';
+    }
+
+</script>
+</html>

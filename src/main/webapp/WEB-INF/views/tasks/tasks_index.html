@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Задачи</title>
+    <script src="/static/libraries/jquery.min.js"></script>
+    <script src="/static/js/common.js"></script>
+    <script src="/static/js/tasks_filter.js"></script>
+    <script src="/static/js/cookie.js"></script>
+    <script src="/static/js/tasks_manager.js"></script>
+    <script src="/static/js/manager_common.js"></script>
+    <link rel="stylesheet" href="/static/css/search.css">
+    <link rel="stylesheet" href="/static/css/main_template.css">
+    <link rel="stylesheet" href="/static/css/buttons.css">
+    <link rel="stylesheet" href="/static/css/tables.css">
+    <link rel="stylesheet" href="/static/css/pages_buttons.css">
+    <link rel="stylesheet" href="/static/css/filter.css">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <script>
+        let taskManager = new TasksManager();
+    </script>
+</head>
+<body>
+<div class="main_div">
+    <div th:insert="main_template::menu"></div>
+    <div class="content_div" id="result_div">
+        <div class="task_buttons" th:fragment="taskButtons" style="width: 650px; height: 50px; margin: 0 auto; display: flex;">
+            <a style="margin-top: 15px" href="/tasks/new" onclick="document.querySelector('.load').style.display = 'block'">
+                <button class="task_button" id="tb1">Создать</button>
+            </a>
+            <a onclick="buildRequest(taskManager, '/tasks/get_opened', 'tb2')">
+                <button class="task_button" id="tb2" style="margin-left: 5px; margin-top: 15px">Открытые</button>
+            </a>
+            <a onclick="buildRequest(taskManager, '/tasks/get_mine', 'tb3')">
+                <button class="task_button" id="tb3" style="margin-left: 5px; margin-top: 15px">Мои</button>
+            </a>
+            <a onclick="buildRequest(taskManager, '/tasks/get_attached', 'tb4')">
+                <button class="task_button" id="tb4" style="margin-left: 5px; margin-top: 15px">Закреплённые</button>
+            </a>
+            <a onclick="buildRequest(taskManager, '/tasks/get_all', 'tb5')">
+                <button class="task_button" id="tb5" style="margin-left: 5px; margin-top: 15px">Все</button>
+            </a>
+            <a id="filter_button">
+                <button class="filter_button" id="tb6" style="width: 27px;margin-left: 5px; margin-top: 15px" onclick="showTasksFilter()"></button>
+            </a>
+        </div>
+        <div id="resultDiv">
+            <div id="resultContent"></div>
+            <div id="resultNavigation"></div>
+        </div>
+    </div>
+</div>
+<div th:fragment="filter_window" class="filter_window">
+    <div style="height: 110px; background-color: #F4F6FA; width: 535px; margin: 15px auto 0; border-radius: 3px;">
+        <div class="filter_title">
+            <div>Статус</div>
+            <div>Приоритет</div>
+            <div>Создано</div>
+        </div>
+        <div class="filter_drop_down">
+            <div id="TaskStatusParam">
+                <select class="param">
+                </select>
+            </div>
+            <div id="TaskPriorityParam">
+                <select class="param">
+                </select>
+            </div>
+            <div id="TaskDateParam">
+                <select class="param">
+                </select>
+            </div>
+        </div>
+        <div class="filter_values">
+            <div id="TaskStatusValue">
+                <select class="value">
+                </select>
+            </div>
+            <div id="TaskPriorityValue">
+                <select class="value">
+                </select>
+            </div>
+            <div id="TaskDateValue">
+                <input class="value" type="text">
+            </div>
+        </div>
+        <div class="filter_reset">
+            <div>
+                <div onclick="removeFilter('TaskStatusValue', 'TaskStatusParam')"></div>
+            </div>
+            <div>
+                <div onclick="removeFilter('TaskPriorityValue', 'TaskPriorityParam')"></div>
+            </div>
+            <div>
+                <div onclick="removeFilter('TaskDateValue', 'TaskDateParam')"></div>
+            </div>
+        </div>
+    </div>
+    <div>
+        <div class="filter_buttons">
+            <button onclick="applyTasksFilter()" style="float: left">Применить</button>
+            <button onclick="hideTasksFilter()" style="float: right">Отмена</button>
+        </div>
+    </div>
+</div>
+<div class="spinner" id="spinner"></div>
+</body>
+<script>
+    window.onload = function () {
+        document.getElementById('b1').style.backgroundColor = 'rgb(192, 192, 192)';
+
+        buildRequest(taskManager, '/tasks/get_opened', 'tb2')
+    }
+</script>
+</html>

@@ -1,0 +1,6 @@
+target/
+resources/
+out/
+log/
+.idea/
+uploads/
